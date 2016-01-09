@@ -6,7 +6,7 @@
 
     <groupId>by.geo</groupId>
     <artifactId>geoid</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
@@ -32,6 +32,11 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>
