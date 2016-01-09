@@ -1,6 +1,7 @@
 package by.geo.grav;
 
 import by.geo.ref.Ellipsoid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,11 +34,11 @@ public final class EGM08 extends GravityFieldModel {
      *
      * @param GFC путь к файлу с
      *            <a href="http://icgem.gfz-potsdam.de/ICGEM/shms/egm2008.gfc">
-     *                коэффициентами модели</a> (в кодировке UTF-8 w/o BOM)
+     *            коэффициентами модели</a> (в кодировке UTF-8 w/o BOM)
      * @param ell эллипсоид
      * @throws IOException
      */
-    public EGM08(final String GFC, final Ellipsoid ell) throws IOException {
+    public EGM08(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
         super(GFC, ell, nMax);
     }
 

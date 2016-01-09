@@ -2,18 +2,18 @@ package by.geo.math;
 
 import by.geo.point.Geodetic;
 import by.geo.point.Grid;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Функция, осуществляющая билинейную интерполяцию по сетке значений.
  */
 public final class BilinearInterpolator implements GeodeticToDoubleFunction {
 
+    @NotNull
     private final Grid grid;
 
-    public BilinearInterpolator(final Grid grid) {
-        this.grid = Objects.requireNonNull(grid);
+    public BilinearInterpolator(@NotNull final Grid grid) {
+        this.grid = grid;
     }
 
     /**
@@ -22,8 +22,8 @@ public final class BilinearInterpolator implements GeodeticToDoubleFunction {
      * @return интерполированное значение
      */
     @Override
-    public double applyAsDouble(final Geodetic pt) {
-        if (!(Objects.nonNull(pt) && grid.isValid(pt))) {
+    public double applyAsDouble(@NotNull final Geodetic pt) {
+        if (!grid.isValid(pt)) {
             throw new IllegalArgumentException("pt is not valid");
         }
         final double B = pt.latDeg();

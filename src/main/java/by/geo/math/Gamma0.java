@@ -3,18 +3,18 @@ package by.geo.math;
 import by.geo.point.Geodetic;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Функция вычисления нормальной силы тяжести на поверхности эллипсоида.
  */
 public final class Gamma0 implements GeodeticToDoubleFunction {
 
+    @NotNull
     private final Ellipsoid ell;
 
-    public Gamma0(final Ellipsoid ell) {
-        this.ell = Objects.requireNonNull(ell);
+    public Gamma0(@NotNull final Ellipsoid ell) {
+        this.ell = ell;
     }
 
     /**
@@ -24,8 +24,7 @@ public final class Gamma0 implements GeodeticToDoubleFunction {
      * @return нормальная сила тяжести
      */
     @Override
-    public double applyAsDouble(final Geodetic pt) {
-        Objects.nonNull(pt);
+    public double applyAsDouble(@NotNull final Geodetic pt) {
         final double lat = pt.latRad();
 
         return ell.getGammaE() * (1 + ell.getK() * FastMath.pow(FastMath.sin(lat), 2))

@@ -2,11 +2,11 @@ package by.geo.grav;
 
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 /**
  * Глобальная модель гравитационного поля.
@@ -15,6 +15,7 @@ public abstract class GravityFieldModel {
 
     private static final int zonDeg = 5;
     private final static double W = 62_636_856.0;
+    @NotNull
     private final Ellipsoid ell;
 
     /**
@@ -31,14 +32,15 @@ public abstract class GravityFieldModel {
      * @throws IllegalArgumentException если {@code nMax < 1}
      * @throws IOException
      */
-    protected GravityFieldModel(final String GFC, final Ellipsoid ell, final int nMax)
+    protected GravityFieldModel(@NotNull final String GFC,
+                                @NotNull final Ellipsoid ell, final int nMax)
             throws IOException {
 
         if (nMax < 1)
             throw new IllegalArgumentException("nMax is not valid");
 
-        this.GFC = Paths.get(Objects.requireNonNull(GFC));
-        this.ell = Objects.requireNonNull(ell);
+        this.GFC = Paths.get(GFC);
+        this.ell = ell;
         C = new double[nMax + 1][];
         S = new double[nMax + 1][];
         dC = new double[nMax + 1][];
@@ -56,11 +58,13 @@ public abstract class GravityFieldModel {
     /**
      * Коэффициенты.
      */
+    @NotNull
     private final double[][] C, S;
 
     /**
      * Ошибки коэффициентов.
      */
+    @NotNull
     private final double[][] dC, dS;
 
     /**
@@ -88,6 +92,7 @@ public abstract class GravityFieldModel {
     /**
      * Референц эллипсоид.
      */
+    @NotNull
     public Ellipsoid ellipsoid() {
         return ell;
     }
@@ -95,7 +100,7 @@ public abstract class GravityFieldModel {
     /**
      * Формирование массивов.
      */
-    private static void fillArray(final double[][] arr) {
+    private static void fillArray(@NotNull final double[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = new double[i + 1];
         }

@@ -1,6 +1,7 @@
 package by.geo.math;
 
 import org.apache.commons.math3.util.FastMath;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Полностью нормализованные присоединенные полиномы Лежандра.
@@ -11,6 +12,7 @@ public final class LegendrePolynoms {
     /**
      * Двухмерный неровный массив значений.
      */
+    @NotNull
     private final double[][] vals;
 
     /**

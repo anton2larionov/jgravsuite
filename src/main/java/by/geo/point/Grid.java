@@ -1,5 +1,7 @@
 package by.geo.point;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Грид (регулярная сетка двухмерных точек)
  * на основе двухмерного массива значений.
@@ -11,6 +13,7 @@ public final class Grid {
     /**
      * @return Строитель грида
      */
+    @NotNull
     public static GridBuilder builder() {
         return builder;
     }
@@ -35,6 +38,7 @@ public final class Grid {
     /**
      * Двухмерный массив значений.
      */
+    @NotNull
     private final double[][] vals;
 
     /**
@@ -128,7 +132,7 @@ public final class Grid {
      * если координаты {@code pt} в территориальных рамках грида,
      * иначе {@code false}
      */
-    public boolean isValid(final Geodetic pt) {
+    public boolean isValid(@NotNull final Geodetic pt) {
         final double B = pt.latDeg();
         final double L = pt.lonDeg();
         return !(B < lat0 || B > lat || L < lon0 || L > lon);

@@ -4,15 +4,16 @@ import by.geo.math.GeoidCalculator;
 import by.geo.point.Grid;
 import by.geo.point.Node;
 import org.apache.commons.math3.util.Pair;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Вычисление высот геоида для узлов регулярной сетки.
  */
 public class CalcOnGrid {
 
+    @NotNull
     private final Grid grid;
+    @NotNull
     private final GeoidCalculator calc;
 
     /**
@@ -21,9 +22,9 @@ public class CalcOnGrid {
      * @param grid регулярная сетка
      * @param calc калькулятор высот геоида
      */
-    public CalcOnGrid(final Grid grid, final GeoidCalculator calc) {
-        this.grid = Objects.requireNonNull(grid);
-        this.calc = Objects.requireNonNull(calc);
+    public CalcOnGrid(@NotNull final Grid grid, @NotNull final GeoidCalculator calc) {
+        this.grid = grid;
+        this.calc = calc;
     }
 
     /**

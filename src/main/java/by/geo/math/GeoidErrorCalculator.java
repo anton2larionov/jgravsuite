@@ -3,15 +3,16 @@ package by.geo.math;
 import by.geo.grav.GravityFieldModel;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Калькулятор ошибок высот геоида.
  */
 public final class GeoidErrorCalculator {
+    @NotNull
     private final Ellipsoid ell;
-    private final GravityFieldModel egm;
+    @NotNull
+    private final GravityFieldModel model;
     private final int nMax;
 
     private final double commissionError, omissionError;
@@ -23,11 +24,11 @@ public final class GeoidErrorCalculator {
      *
      * @param gravityFieldModel глобальная модель геопотенциала
      */
-    public GeoidErrorCalculator(final GravityFieldModel gravityFieldModel) {
-        this.egm = Objects.requireNonNull(gravityFieldModel);
+    public GeoidErrorCalculator(@NotNull final GravityFieldModel gravityFieldModel) {
+        model = gravityFieldModel;
 
-        ell = this.egm.ellipsoid();
-        nMax = this.egm.maxDegree();
+        ell = model.ellipsoid();
+        nMax = model.maxDegree();
 
         commissionError = commissionError();
         omissionError = omissionError();
@@ -38,8 +39,8 @@ public final class GeoidErrorCalculator {
         for (int n = 2; n <= nMax; n++) {
             double sigma = 0;
             for (int m = 0; m <= n; m++) {
-                sigma += (FastMath.pow(egm.getErrorC(n, m), 2) +
-                        FastMath.pow(egm.getErrorS(n, m), 2));
+                sigma += (FastMath.pow(model.getErrorC(n, m), 2) +
+                        FastMath.pow(model.getErrorS(n, m), 2));
             }
             comm += sigma;
         }

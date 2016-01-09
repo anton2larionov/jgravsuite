@@ -1,6 +1,7 @@
 package by.geo.grav;
 
 import by.geo.ref.Ellipsoid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public final class Eigen6c4 extends GravityFieldModel {
      * @param ell эллипсоид
      * @throws IOException
      */
-    public Eigen6c4(final String GFC, final Ellipsoid ell) throws IOException {
+    public Eigen6c4(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
         super(GFC, ell, nMax);
     }
 

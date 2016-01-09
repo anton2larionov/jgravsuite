@@ -3,18 +3,18 @@ package by.geo.math;
 import by.geo.point.Geodetic;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Функция вычисления локального эллипсоидального радиуса.
  */
 public final class EllipsoidalRadius implements GeodeticToDoubleFunction {
 
+    @NotNull
     private final Ellipsoid ell;
 
-    public EllipsoidalRadius(final Ellipsoid ell) {
-        this.ell = Objects.requireNonNull(ell);
+    public EllipsoidalRadius(@NotNull final Ellipsoid ell) {
+        this.ell = ell;
     }
 
     /**
@@ -23,8 +23,7 @@ public final class EllipsoidalRadius implements GeodeticToDoubleFunction {
      * @return локальный эллипсоидальной радиус
      */
     @Override
-    public double applyAsDouble(final Geodetic pt) {
-        Objects.nonNull(pt);
+    public double applyAsDouble(@NotNull final Geodetic pt) {
         final double e2 = FastMath.pow(ell.getE(), 2);
         final double sinPhi2 = FastMath.pow(FastMath.sin(pt.latRad()), 2);
 

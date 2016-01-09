@@ -5,10 +5,10 @@ import by.geo.point.Geodetic;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,13 +17,18 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class GeoidCalculator implements GeodeticToDoubleFunction {
 
+    @NotNull
     private final GravityFieldModel model;
+    @NotNull
     private final Ellipsoid ell;
     private final int nMax;
     private final double N0;
 
+    @NotNull
     private final EllipsoidalRadius ellipsoidalRadius;
+    @NotNull
     private final GeocentricLatitude geocentricLatitude;
+    @NotNull
     private final Gamma0 gamma0;
 
     // Cache
@@ -37,8 +42,8 @@ public final class GeoidCalculator implements GeodeticToDoubleFunction {
      *
      * @param gravityFieldModel глобальная модель геопотенциала
      */
-    public GeoidCalculator(final GravityFieldModel gravityFieldModel) {
-        model = Objects.requireNonNull(gravityFieldModel);
+    public GeoidCalculator(@NotNull final GravityFieldModel gravityFieldModel) {
+        model = gravityFieldModel;
         ell = model.ellipsoid();
         nMax = model.maxDegree();
         N0 = calculateN0();
@@ -55,7 +60,7 @@ public final class GeoidCalculator implements GeodeticToDoubleFunction {
      * @return высота геоида в метрах
      */
     @Override
-    public double applyAsDouble(final Geodetic pt) {
+    public double applyAsDouble(@NotNull final Geodetic pt) {
         // этап инициализации
         final double r = ellipsoidalRadius.applyAsDouble(pt);
         final double phi = geocentricLatitude.applyAsDouble(pt);
@@ -107,10 +112,12 @@ public final class GeoidCalculator implements GeodeticToDoubleFunction {
     /**
      * @return калькулятор ошибок высот геоида
      */
+    @NotNull
     public GeoidErrorCalculator errorCalculator() {
         return new GeoidErrorCalculator(model);
     }
 
+    @NotNull
     private Pair<double[], double[]> computePair(final double lonRad) {
         final double[] sinLon = new double[nMax + 1];
         final double[] cosLon = new double[nMax + 1];

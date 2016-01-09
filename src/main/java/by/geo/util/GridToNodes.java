@@ -2,23 +2,24 @@ package by.geo.util;
 
 import by.geo.point.Grid;
 import by.geo.point.Node;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 
 /**
  * Преобразователь грида в коллекцию узлов.
  */
 public final class GridToNodes {
 
+    @NotNull
     private final Grid grid;
 
     /**
      * @param grid грид
      */
-    public GridToNodes(final Grid grid) {
-        this.grid = Objects.requireNonNull(grid);
+    public GridToNodes(@NotNull final Grid grid) {
+        this.grid = grid;
     }
 
     /**
@@ -26,6 +27,7 @@ public final class GridToNodes {
      *
      * @return коллекция узлов
      */
+    @NotNull
     public Collection<Node> knots() {
 
         final double lon0 = grid.lonMin();

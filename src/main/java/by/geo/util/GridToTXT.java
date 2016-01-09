@@ -1,25 +1,26 @@
 package by.geo.util;
 
 import by.geo.point.Grid;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 /**
  * Преобразователь грида в текстовый формат.
  */
 public final class GridToTXT {
 
+    @NotNull
     private final Grid grid;
 
     /**
      * @param grid грид
      */
-    public GridToTXT(final Grid grid) {
-        this.grid = Objects.requireNonNull(grid);
+    public GridToTXT(@NotNull final Grid grid) {
+        this.grid = grid;
     }
 
     /**
@@ -28,7 +29,7 @@ public final class GridToTXT {
      * @param txtFile файл для записи
      * @throws IOException
      */
-    public void write(final String txtFile) throws IOException {
+    public void write(@NotNull final String txtFile) throws IOException {
 
         final double lon0 = grid.lonMin();
         final double lat0 = grid.latMin();
