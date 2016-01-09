@@ -13,19 +13,17 @@
                 .build();
 
         /** Создание эллисоида, модели геопотенциала и калькулятора высот геоида */
-        final Ellipsoid ellipsoid = RefSystem.GRS80.ellipsoid();
-        final GravityFieldModel gravityModel = new EGM08("d:/EGM08", ellipsoid);
-        final GeoidCalculator calc = new GeoidCalculator(gravityModel);
+        GfmRepo.EGM08.get("d:/EGM08", RefSystem.GRS80.ellipsoid())
+                .ifPresent(model -> {
 
-        /** Вычисления */
-        new CalcOnGrid(grid, calc).perform();
+                    /** Вычисления */
+                    final GeoidCalculator calc = new GeoidCalculator(model);
+                    new CalcOnGrid(grid, calc).perform();
+                    System.out.println(calc.errorCalculator().totalError());
+                });
+        
+        // new GridToTXT(grid).write("d:/out.txt");
 
-        /** Точность высот модели */
-        System.out.println(calc.errorCalculator().totalError());
-
-        new GridToTXT(grid).write("d:/out.txt");
-
-        /** Интерполяция */
         System.out.println(
                 new BilinearInterpolator(grid)
                         .applyAsDouble(
