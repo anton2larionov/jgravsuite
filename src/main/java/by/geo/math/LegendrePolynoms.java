@@ -8,21 +8,28 @@ import org.apache.commons.math3.util.FastMath;
 public final class LegendrePolynoms {
     private final double t, u;
 
-    private final double[][] map;
+    /**
+     * Двухмерный неровный массив значений.
+     */
+    private final double[][] vals;
 
     /**
      * Полностью нормализованные присоединенные полиномы Лежандра.
      *
      * @param phi  геоцентрическая широта
      * @param nMax максимальная степень
+     * @throws IllegalArgumentException если {@code nMax < 1}
      */
     public LegendrePolynoms(final double phi, final int nMax) {
+        if (nMax < 1)
+            throw new IllegalArgumentException("nMax is not valid");
+
         t = FastMath.sin(phi);
         u = FastMath.cos(phi);
 
-        map = new double[nMax + 1][];
-        for (int i = 0; i < map.length; i++) {
-            map[i] = new double[i + 1];
+        vals = new double[nMax + 1][];
+        for (int i = 0; i < vals.length; i++) {
+            vals[i] = new double[i + 1];
         }
         createPolynoms();
     }
@@ -33,40 +40,48 @@ public final class LegendrePolynoms {
      * @param n степень
      * @param m порядок
      * @return значение P[n][m]
+     * @throws IllegalArgumentException если {@code (n < 0 || n > nMax || m < 0 || m > n)}
      */
-    public double getValue(final int n, final int m) {
-        return map[n][m];
+    public double value(final int n, final int m) {
+        if (n < 0 || n >= vals.length)
+            throw new IllegalArgumentException("n is not valid");
+        if (m < 0 || m > n)
+            throw new IllegalArgumentException("m is not valid");
+
+        return vals[n][m];
     }
 
     private void createPolynoms() {
-        map[0][0] = 1.0;
-        map[1][0] = value(1, 0);
-        map[1][1] = u * FastMath.sqrt(3.0);
+        // стартовые значения
+        vals[0][0] = 1.0;
+        vals[1][0] = init(1, 0);
+        vals[1][1] = u * FastMath.sqrt(3.0);
 
-        for (int n = 2; n < map.length; n++) {
-            for (int m = 0; m < map[n].length; m++) {
-                map[n][m] = value(n, m);
+        for (int n = 2; n < vals.length; n++) {
+            for (int m = 0; m < vals[n].length; m++) {
+                vals[n][m] = init(n, m);
             }
         }
     }
 
-    private double value(final int n, final int m) {
+    // Реализация реккурентного соотношения
+    private double init(final int n, final int m) {
         // sectorial
         if (n == m) {
             return u * FastMath.sqrt((2. * m + 1.) / (2. * m))
-                    * map[n - 1][m - 1];
+                    * vals[n - 1][m - 1];
         }
 
         // tesseral
-        return getA(n, m) * getFromMap(n - 1, m) * t - getB(n, m)
-                * getFromMap(n - 2, m);
+        return getA(n, m) * getFromArray(n - 1, m) * t - getB(n, m)
+                * getFromArray(n - 2, m);
     }
 
-    private double getFromMap(final int n, final int m) {
+    private double getFromArray(final int n, final int m) {
         if (n < m) {
             return 0.0;
         }
-        return map[n][m];
+        return vals[n][m];
     }
 
     private static double getA(final int n, final int m) {

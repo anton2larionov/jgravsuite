@@ -1,25 +1,32 @@
 package by.geo.math;
 
-import by.geo.egm.Ellipsoid;
-import by.geo.model.Geodetic;
+import by.geo.point.Geodetic;
+import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
 
-public class GeocentricLatitude {
+import java.util.Objects;
+
+/**
+ * Функция вычисления сферической широты.
+ */
+public final class GeocentricLatitude implements GeodeticToDoubleFunction {
 
     private final Ellipsoid ell;
 
     public GeocentricLatitude(final Ellipsoid ell) {
-        this.ell = ell;
+        this.ell = Objects.requireNonNull(ell);
     }
 
     /**
-     * Вычисление сферической широты.
+     * Вычисление сферической широты в точке {@code pt}.
      *
      * @return сферическая широта
      */
-    public double calculate(final Geodetic p) {
+    @Override
+    public double applyAsDouble(final Geodetic pt) {
+        Objects.nonNull(pt);
         return FastMath.atan(FastMath.pow((ell.getB() / ell.getA()), 2)
-                * FastMath.tan(p.latRad()));
+                * FastMath.tan(pt.latRad()));
     }
 
 }

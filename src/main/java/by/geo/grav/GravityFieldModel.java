@@ -1,28 +1,44 @@
-package by.geo.egm.gfc;
+package by.geo.grav;
 
-import by.geo.egm.Ellipsoid;
+import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * Глобальная модель гравитационного поля.
  */
-public abstract class GravityModel {
+public abstract class GravityFieldModel {
 
     private static final int zonDeg = 5;
     private final static double W = 62_636_856.0;
     private final Ellipsoid ell;
 
     /**
-     * Имя файла с коэффициентами модели.
+     * Путь к файлу с коэффициентами модели.
      */
-    protected final String GFC;
+    protected final Path GFC;
 
-    protected GravityModel(final String GFC, final Ellipsoid ell, final int nMax)
+    /**
+     * Конструктор глобальной модели гравитационного поля.
+     *
+     * @param GFC  имя файла с коэффициентами модели
+     * @param ell  эллипсоид
+     * @param nMax максимальная степень
+     * @throws IllegalArgumentException если {@code nMax < 1}
+     * @throws IOException
+     */
+    protected GravityFieldModel(final String GFC, final Ellipsoid ell, final int nMax)
             throws IOException {
-        this.GFC = GFC;
-        this.ell = ell;
+
+        if (nMax < 1)
+            throw new IllegalArgumentException("nMax is not valid");
+
+        this.GFC = Paths.get(Objects.requireNonNull(GFC));
+        this.ell = Objects.requireNonNull(ell);
         C = new double[nMax + 1][];
         S = new double[nMax + 1][];
         dC = new double[nMax + 1][];
@@ -38,12 +54,12 @@ public abstract class GravityModel {
     abstract void readGFC() throws IOException;
 
     /**
-     * коэффициенты
+     * Коэффициенты.
      */
     private final double[][] C, S;
 
     /**
-     * ошибки коэффициентов
+     * Ошибки коэффициентов.
      */
     private final double[][] dC, dS;
 
@@ -72,7 +88,7 @@ public abstract class GravityModel {
     /**
      * Референц эллипсоид.
      */
-    public Ellipsoid getEllipsoid() {
+    public Ellipsoid ellipsoid() {
         return ell;
     }
 
@@ -98,9 +114,9 @@ public abstract class GravityModel {
      * Нормированный зональный коэффициент.
      */
     private double getZonalC(final int n) {
-        return (getEllipsoid().getGM() / getGM())
-                * FastMath.pow(getEllipsoid().getA() / getA(), n)
-                * getEllipsoid().getJ2n(n) / FastMath.sqrt(4 * n + 1);
+        return (ellipsoid().getGM() / getGM())
+                * FastMath.pow(ellipsoid().getA() / getA(), n)
+                * ellipsoid().getJ2n(n) / FastMath.sqrt(4 * n + 1);
     }
 
     /**
