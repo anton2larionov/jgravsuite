@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 /**
- * Eigen-6c4.
- *
+ * Eigen-6 (c4).
+ * <p>
  * <p>EIGEN-6C4 is a static global combined gravity
  * field modelup to degree and order 2190. </p>
- *
+ * <p>
  * <table summary="">
  * <tr><td>earth_gravity_constant</td>    <td>0.3986004415E+15</td></tr>
  * <tr><td>radius</td>                    <td>0.6378136460E+07</td></tr>
@@ -22,14 +22,14 @@ import java.nio.file.Files;
  * @see <a href="http://icgem.gfz-potsdam.de/ICGEM/documents/Foerste-et-al-EIGEN-6C4.pdf">
  * Foerste-et-al-EIGEN-6C4.pdf</a>
  */
-public final class EIGEN6C4 extends GravFieldModel {
+public final class EIGEN6 extends GravFieldModel {
 
     private final static double GM = 3.98_600_4415E+14;
     private final static double a = 6_378_136.46;
     private final static int nMax = 2190;
 
     /**
-     * Конструктор Eigen-6c4.
+     * Конструктор Eigen-6.
      *
      * @param GFC путь к файлу с
      *            <a href="http://icgem.gfz-potsdam.de/ICGEM/shms/eigen-6c4.gfc">
@@ -37,7 +37,7 @@ public final class EIGEN6C4 extends GravFieldModel {
      * @param ell эллипсоид
      * @throws IOException
      */
-    EIGEN6C4(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
+    EIGEN6(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
         super(GFC, ell, nMax);
     }
 

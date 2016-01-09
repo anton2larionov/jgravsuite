@@ -25,14 +25,14 @@ public enum GfmRepo {
         }
     },
 
-    EIGEN6C4 {
+    EIGEN6 {
         @Override
         @NotNull
         public Optional<? extends GravFieldModel>
         get(@NotNull final String GFC, @NotNull final Ellipsoid ell) {
-            Optional<EIGEN6C4> opt;
+            Optional<EIGEN6> opt;
             try {
-                opt = Optional.of(new EIGEN6C4(GFC, ell));
+                opt = Optional.of(new EIGEN6(GFC, ell));
             } catch (IOException e) {
                 opt = Optional.empty();
             }
