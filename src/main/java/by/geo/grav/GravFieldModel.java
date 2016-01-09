@@ -9,9 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Глобальная модель гравитационного поля.
+ * Глобальная модель гравитационного поля Земли.
  */
-public abstract class GravityFieldModel {
+public abstract class GravFieldModel {
 
     private static final int zonDeg = 5;
     private final static double W = 62_636_856.0;
@@ -32,8 +32,8 @@ public abstract class GravityFieldModel {
      * @throws IllegalArgumentException если {@code nMax < 1}
      * @throws IOException
      */
-    protected GravityFieldModel(@NotNull final String GFC,
-                                @NotNull final Ellipsoid ell, final int nMax)
+    protected GravFieldModel(@NotNull final String GFC,
+                             @NotNull final Ellipsoid ell, final int nMax)
             throws IOException {
 
         if (nMax < 1)

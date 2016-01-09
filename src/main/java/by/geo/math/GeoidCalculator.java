@@ -1,6 +1,6 @@
 package by.geo.math;
 
-import by.geo.grav.GravityFieldModel;
+import by.geo.grav.GravFieldModel;
 import by.geo.point.Geodetic;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
@@ -17,8 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class GeoidCalculator implements GeodeticToDoubleFunction {
 
-    @NotNull
-    private final GravityFieldModel model;
+    private final @NotNull GravFieldModel model;
     @NotNull
     private final Ellipsoid ell;
     private final int nMax;
@@ -40,10 +39,10 @@ public final class GeoidCalculator implements GeodeticToDoubleFunction {
     /**
      * Калькулятор высот квазигеоида по глобальной модели геопотенциала.
      *
-     * @param gravityFieldModel глобальная модель геопотенциала
+     * @param gravFieldModel глобальная модель геопотенциала
      */
-    public GeoidCalculator(@NotNull final GravityFieldModel gravityFieldModel) {
-        model = gravityFieldModel;
+    public GeoidCalculator(final @NotNull GravFieldModel gravFieldModel) {
+        model = gravFieldModel;
         ell = model.ellipsoid();
         nMax = model.maxDegree();
         N0 = calculateN0();

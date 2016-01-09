@@ -9,12 +9,12 @@ import java.nio.file.Files;
 
 /**
  * EGM08.
- * <p>
+ *
  * <p>An Earth Gravitational Model is complete to spherical harmonic
  * degree and order 2159, and contains additional coefficients extending
  * to degree 2190 and order 2159. </p>
- * <p>
- * <table>
+ *
+ * <table summary="">
  * <tr><td>earth_gravity_constant</td>    <td>0.3986004415E+15</td></tr>
  * <tr><td>radius</td>                    <td>0.63781363E+07</td></tr>
  * <tr><td>max_degree</td>                <td>2190</td></tr>
@@ -23,7 +23,7 @@ import java.nio.file.Files;
  * @see <a href="http://earth-info.nga.mil/GandG/wgs84/gravitymod/egm2008/">
  * earth-info.nima.mil</a>
  */
-public final class EGM08 extends GravityFieldModel {
+public final class EGM08 extends GravFieldModel {
 
     private final static double GM = 3.98_600_4415E+14;
     private final static double a = 6_378_136.3;
@@ -38,7 +38,7 @@ public final class EGM08 extends GravityFieldModel {
      * @param ell эллипсоид
      * @throws IOException
      */
-    public EGM08(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
+    EGM08(@NotNull final String GFC, @NotNull final Ellipsoid ell) throws IOException {
         super(GFC, ell, nMax);
     }
 

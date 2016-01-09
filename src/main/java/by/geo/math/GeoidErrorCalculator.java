@@ -1,6 +1,6 @@
 package by.geo.math;
 
-import by.geo.grav.GravityFieldModel;
+import by.geo.grav.GravFieldModel;
 import by.geo.ref.Ellipsoid;
 import org.apache.commons.math3.util.FastMath;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public final class GeoidErrorCalculator {
     @NotNull
     private final Ellipsoid ell;
-    @NotNull
-    private final GravityFieldModel model;
+    private final @NotNull GravFieldModel model;
     private final int nMax;
 
     private final double commissionError, omissionError;
@@ -22,10 +21,10 @@ public final class GeoidErrorCalculator {
     /**
      * Калькулятор ошибок высот геоида, вычисленных по модели геопотенциала.
      *
-     * @param gravityFieldModel глобальная модель геопотенциала
+     * @param gravFieldModel глобальная модель геопотенциала
      */
-    public GeoidErrorCalculator(@NotNull final GravityFieldModel gravityFieldModel) {
-        model = gravityFieldModel;
+    public GeoidErrorCalculator(final @NotNull GravFieldModel gravFieldModel) {
+        model = gravFieldModel;
 
         ell = model.ellipsoid();
         nMax = model.maxDegree();
