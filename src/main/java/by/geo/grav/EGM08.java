@@ -66,8 +66,9 @@ public final class EGM08 extends GravFieldModel {
             int x = 2, y = 0;
 
             while ((line = br.readLine()) != null && x <= nMax) {
-                rawCS = line.split("\\s++");
+                if (line.contains("     0    0")) continue;
 
+                rawCS = line.split("\\s++");
                 if (!rawCS[0].equals("gfc")) continue;
 
                 setC(x, y, Double.parseDouble(rawCS[3]));

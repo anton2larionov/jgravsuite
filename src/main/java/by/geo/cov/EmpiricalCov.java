@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 /**
  * Эмпирическая ковариация.
@@ -138,18 +137,14 @@ public class EmpiricalCov {
     private double minDist() {
         final List<Double> raw = new ArrayList<>(size);
         final List<Double> min = new ArrayList<>(size);
-
-        IntStream.range(0, size).forEach(
-                p -> {
-                    IntStream.range(0, size).forEach(
-                            i -> {
-                                if (i != p)
-                                    raw.add(sphericalDistance.applyAsDouble(list.get(p), list.get(i)));
-                            });
-                    min.add(raw.stream().mapToDouble(Double::doubleValue).min()
-                            .getAsDouble());
-                    raw.clear();
-                });
+        for (int p = 0; p < size; p++) {
+            for (int i = 0; i < size; i++)
+                if (i != p)
+                    raw.add(sphericalDistance.applyAsDouble(list.get(p), list.get(i)));
+            min.add(raw.stream().mapToDouble(Double::doubleValue).min()
+                    .getAsDouble());
+            raw.clear();
+        }
         return min.stream().mapToDouble(Double::doubleValue).average()
                 .getAsDouble();
     }
